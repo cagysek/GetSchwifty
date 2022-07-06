@@ -22,6 +22,13 @@ struct Character: Identifiable, Decodable {
         self.status = character?.status ?? ""
         self.image = character?.image ?? ""
     }
+    
+    init(id: String, name: String, status: String, image: String) {
+        self.id = id
+        self.name = name
+        self.status = status
+        self.image = image
+    }
 }
 
 

@@ -17,11 +17,21 @@ struct TabBar: View {
     @Binding var current: ETabBarItems
     @ObservedObject var coordinator: HomeCoordinator
     
+    init(current: Binding<ETabBarItems>, coordinator: HomeCoordinator) {
+        
+        self.coordinator = coordinator
+        self._current = current
+        
+        UITabBar.appearance().standardAppearance = uiTabBarAppearance
+    }
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             TabView(selection: $current) {
                 CharacterListCoordinatorView(coordinator: self.coordinator.characterListCoordinator)
                     .tag(ETabBarItems.CHARACTER_LIST)
+                    
+                    
                 FavoriteListCoordinatorView()
                     .tag(ETabBarItems.FAVORITES)
             }
@@ -39,4 +49,12 @@ struct TabBar: View {
             .frame(width: 130)
         }
     }
+}
+
+fileprivate var uiTabBarAppearance: UITabBarAppearance {
+    let appearance = UITabBarAppearance()
+    appearance.configureWithTransparentBackground()
+    
+            
+    return appearance
 }

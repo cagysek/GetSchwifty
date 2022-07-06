@@ -8,8 +8,8 @@ public final class CharacterListQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query CharacterList {
-      characters(page: 1) {
+    query CharacterList($page: Int) {
+      characters(page: $page) {
         __typename
         info {
           __typename
@@ -28,7 +28,14 @@ public final class CharacterListQuery: GraphQLQuery {
 
   public let operationName: String = "CharacterList"
 
-  public init() {
+  public var page: Int?
+
+  public init(page: Int? = nil) {
+    self.page = page
+  }
+
+  public var variables: GraphQLMap? {
+    return ["page": page]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -36,7 +43,7 @@ public final class CharacterListQuery: GraphQLQuery {
 
     public static var selections: [GraphQLSelection] {
       return [
-        GraphQLField("characters", arguments: ["page": 1], type: .object(Character.selections)),
+        GraphQLField("characters", arguments: ["page": GraphQLVariable("page")], type: .object(Character.selections)),
       ]
     }
 
