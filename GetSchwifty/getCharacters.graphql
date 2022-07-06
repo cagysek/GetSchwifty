@@ -1,5 +1,5 @@
-query CharacterList($page: Int) {
-  characters(page: $page) {
+query CharacterList($page: Int, $name: String) {
+  characters(page: $page, filter: {name: $name}) {
     info {
       count
     }

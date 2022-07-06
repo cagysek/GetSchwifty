@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CharacterListView: View {
     
+    @Environment(\.isSearching) var isSearching
+    
     @ObservedObject var viewModel: CharacterListViewModel
     
     @State private var searchText = ""
@@ -17,7 +19,13 @@ struct CharacterListView: View {
         
         Group {
             if (self.viewModel.characters.isEmpty) {
-                Text("Loading")
+                if (self.isSearching) {
+                    
+                    Text(self.viewModel.getSearchingInfoText())
+                } else {
+                    Text("Loading")
+                }
+                    
             } else {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
@@ -26,28 +34,37 @@ struct CharacterListView: View {
                             .onNavigation {
                                 self.viewModel.open(character)
                             }
-                        
                         }
                         
                         if (self.viewModel.isLoading) {
                             ProgressView()
                         }
                     
+                        
                         Color.clear
                             .frame(width: 0, height: 0, alignment: .bottom)
                             .onAppear() {
-                                self.viewModel.loadMore()
+                                // disable loadMore in search
+                                if (self.viewModel.searchText.isEmpty) {
+                                    self.viewModel.loadMore()
+                                }
                             }
-                        
-                        }
+                    }
                 }
             }
         }
         .onAppear(perform: {
             self.viewModel.loadData()
         })
+        .onChange(of: isSearching, perform: { isSearching in
+            if (isSearching) {
+                self.viewModel.startSearching()
+            }
+            else {
+                self.viewModel.loadData()
+            }
+        })
         .navigationTitle("Characters")
-        .searchable(text: $searchText, prompt: "Search character")
         
     }
 }

@@ -18,6 +18,6 @@ struct CharacterListCoordinatorView: View {
                 .navigation(item: $coordinator.characterDetailViewModel) { viewModel in
                     CharacterDetailView(viewModel: viewModel)
                 }
-        }
+        }.searchable(text: self.$coordinator.viewModel.searchText, prompt: "Search character")
     }
 }
