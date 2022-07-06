@@ -7,13 +7,21 @@
 
 import Foundation
 
-struct Character: Identifiable {
+typealias CharacterData = CharacterListQuery.Data.Character
+
+struct Character: Identifiable, Decodable {
     
-    var id: Int
+    var id: String
     var name: String
     var status: String
     var image: String
     
-    
-    
+    init(_ character: CharacterData.Result?) {
+        self.id = character?.id ?? ""
+        self.name = character?.name ?? ""
+        self.status = character?.status ?? ""
+        self.image = character?.image ?? ""
+    }
 }
+
+

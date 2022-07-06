@@ -17,9 +17,6 @@ class CharacterListViewModel: ObservableObject {
     
     init(coordinator: CharacterListCoordinator) {
         self.coordinator = coordinator
-        
-        
-        self.characters = self.dummyData()
     }
     
     func open(_ character: Character) {
@@ -27,11 +24,20 @@ class CharacterListViewModel: ObservableObject {
     }
     
     
-    private func dummyData() -> [Character] {
-        return [
-            Character(id: 1, name: "Rick sanchez", status: "alive", image: ""),
-            Character(id: 2, name: "Morty Smith", status: "alive", image: ""),
-            Character(id: 3, name: "Mr. poopyButt", status: "alive", image: ""),
-        ]
+    public func loadData() -> Void {
+        
+        CharacterService.shared.apollo.fetch(query: CharacterListQuery()) { result in
+
+            switch result {
+                case .success(let graphQLResult):
+                    
+                self.characters = graphQLResult.data?.characters?.results?.compactMap({ character in
+                        Character(character)
+                    }) ?? []
+                    
+                case .failure(let error):
+                    print(error)
+            }
+        }
     }
 }

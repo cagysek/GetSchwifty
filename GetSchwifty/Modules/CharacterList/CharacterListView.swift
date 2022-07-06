@@ -16,25 +16,24 @@ struct CharacterListView: View {
     var body: some View {
         
             
-            List(viewModel.characters) { character in 
-                
-                
-                    HStack {
-                        Image(systemName: "house.fill")
-                        
-                        VStack(alignment: .leading) {
-                            Text(character.name)
-                            Text("Alive")
-                        }
-                        
-                        Spacer()
+            List(viewModel.characters) { character in
+                HStack {
+                    Image(systemName: "house.fill")
+                    
+                    VStack(alignment: .leading) {
+                        Text(character.name)
+                        Text("Alive")
                     }
-                    .onNavigation {
-                        self.viewModel.open(character)
-                    }
-                
-                
+                    
+                    Spacer()
+                }
+                .onNavigation {
+                    self.viewModel.open(character)
+                }
             }
+            .onAppear(perform: {
+                self.viewModel.loadData()
+            })
             .searchable(text: $searchText, prompt: "Search character")
             .navigationTitle("Characters List")
     }

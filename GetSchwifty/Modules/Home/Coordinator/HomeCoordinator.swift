@@ -20,4 +20,5 @@ class HomeCoordinator: ObservableObject {
         self.favoritesCoordinator = .init()
     }
     
+    
 }

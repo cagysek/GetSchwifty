@@ -1,0 +1,13 @@
+query CharacterList {
+  characters(page: 1) {
+    info {
+      count
+    }
+    results {
+        id
+        name
+        status
+        image
+    }
+  }
+}
