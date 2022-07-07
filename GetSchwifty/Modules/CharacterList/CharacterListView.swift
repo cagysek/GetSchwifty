@@ -55,6 +55,7 @@ struct CharacterListView: View {
         }
         .onAppear(perform: {
             self.viewModel.loadData()
+            self.viewModel.navigationText = "Characters"
         })
         .onChange(of: isSearching, perform: { isSearching in
             if (isSearching) {
@@ -64,7 +65,7 @@ struct CharacterListView: View {
                 self.viewModel.loadData()
             }
         })
-        .navigationTitle("Characters")
+        .navigationTitle(self.viewModel.navigationText)
         
     }
 }

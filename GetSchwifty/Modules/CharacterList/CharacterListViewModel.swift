@@ -15,6 +15,7 @@ class CharacterListViewModel: ObservableObject {
     @Published var characters = [Character]()
     @Published var isLoading: Bool = false
     @Published var searchText: String = String()
+    @Published var navigationText = "Characters"
     
     private unowned let coordinator: CharacterListCoordinator
     private var currentPage: Int = 1
@@ -27,7 +28,7 @@ class CharacterListViewModel: ObservableObject {
     }
     
     func open(_ character: Character) {
-        self.coordinator.open(character)
+        self.coordinator.open(character.id)
     }
     
     
@@ -59,7 +60,6 @@ class CharacterListViewModel: ObservableObject {
     }
     
     private func fetchCharacters(page: Int?, name: String? = nil, completion: @escaping ([Character]) -> Void) -> Void {
-        
         
         CharacterService.shared.apollo.fetch(query: CharacterListQuery(page: page, name: name)) { result in
             switch result {

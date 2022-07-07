@@ -23,7 +23,7 @@ class CharacterListCoordinator: ObservableObject {
         self.viewModel = .init(coordinator: self)
     }
     
-    func open(_ character: Character) {
-        self.characterDetailViewModel = .init(character: character, coordinator: self)
+    func open(_ characterId: String) {
+        self.characterDetailViewModel = .init(characterId: characterId, coordinator: self)
     }
 }
