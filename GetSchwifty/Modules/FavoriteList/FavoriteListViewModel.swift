@@ -6,3 +6,20 @@
 //
 
 import Foundation
+
+class FavoriteListViewModel: ObservableObject {
+    
+    
+    private unowned let coordinator: FavoriteListCoordinator
+    
+    
+    init(coordinator: FavoriteListCoordinator) {
+        self.coordinator = coordinator
+        
+        
+    }
+    
+    func open(_ character: Character) {
+        self.coordinator.open(character.id)
+    }
+}

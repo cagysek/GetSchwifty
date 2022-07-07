@@ -18,6 +18,7 @@ struct CharacterListCoordinatorView: View {
                 .navigation(item: $coordinator.characterDetailViewModel) { viewModel in
                     CharacterDetailView(viewModel: viewModel)
                 }
+                .background(Color("backgroundsPrimary"))
         }.searchable(text: self.$coordinator.viewModel.searchText, prompt: "Search character")
     }
 }

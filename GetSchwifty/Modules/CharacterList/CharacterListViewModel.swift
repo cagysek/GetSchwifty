@@ -33,6 +33,20 @@ class CharacterListViewModel: ObservableObject {
     
     
     public func loadData() -> Void {
+        
+        // if is something in searchbar
+        // after move back from detail
+        if (!self.searchText.isEmpty) {
+            self.fetchCharacters(page: nil, name: self.searchText) { data in
+                DispatchQueue.main.async {
+                    self.characters = data
+                    self.isLoading = false
+                }
+            }
+            
+            return
+        }
+        
         self.fetchCharacters(page: 1) { data in
             self.characters = data
             self.currentPage = 2

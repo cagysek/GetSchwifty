@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct FavoriteListView: View {
+    
+    @ObservedObject var viewModel: FavoriteListViewModel
+    
     var body: some View {
-        Text("FAV list")
+        Group {
+            Text("FAV list")
+        }
+        .navigationTitle("Favorites")
     }
 }
 
 struct FavoriteListView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteListView()
+        FavoriteListView(viewModel: FavoriteListViewModel(coordinator: FavoriteListCoordinator(parent: HomeCoordinator())))
     }
 }

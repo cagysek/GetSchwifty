@@ -17,7 +17,7 @@ class HomeCoordinator: ObservableObject {
     
     init() {
         self.characterListCoordinator = .init(parent: self)
-        self.favoritesCoordinator = .init()
+        self.favoritesCoordinator = .init(parent: self)
     }
     
     

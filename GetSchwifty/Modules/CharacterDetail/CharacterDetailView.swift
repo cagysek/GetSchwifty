@@ -18,7 +18,7 @@ struct CharacterDetailView: View {
             } else {
                 ScrollView(showsIndicators: false) {
                     ZStack(alignment: .top) {
-                        Color.white
+                        Color("backgroundsTertiary")
                         
                         VStack(alignment: .leading) {
                             HStack(alignment: .top) {
@@ -32,12 +32,14 @@ struct CharacterDetailView: View {
                                 VStack(alignment: .leading) {
                                     Text("Name")
                                         .paragraphMedium()
+                                        .foregroundColor(Color("foregroundsSecondary"))
                                         .padding(.bottom, 12)
                                         .padding(.top, 22)
                                     
                                     ForEach(self.viewModel.characterDetail!.name.components(separatedBy: " "), id:\.self) { value in
                                         Text(value)
                                             .headline2()
+                                            .foregroundColor(Color("foregroundsPrimary"))
                                     }
                                 }
                                 
@@ -68,6 +70,7 @@ struct CharacterDetailView: View {
             }
 
         }
+        .background(Color("backgroundsPrimary"))
         .onAppear {
             self.viewModel.loadData()
         }
@@ -93,9 +96,11 @@ struct Stats: View {
                 if (i % 2 == 0) {
                     Text(data[i])
                         .paragraphMedium()
+                        .foregroundColor(Color("foregroundsSecondary"))
                 } else {
                     Text(data[i])
                         .headline3()
+                        .foregroundColor(Color("foregroundsPrimary"))
                 }
             }
         }

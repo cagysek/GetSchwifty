@@ -27,26 +27,30 @@ struct TabBar: View {
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
+            
             TabView(selection: $current) {
                 CharacterListCoordinatorView(coordinator: self.coordinator.characterListCoordinator)
                     .tag(ETabBarItems.CHARACTER_LIST)
                     
                     
-                FavoriteListCoordinatorView()
+                FavoriteListCoordinatorView(coordinator: self.coordinator.favoritesCoordinator)
                     .tag(ETabBarItems.FAVORITES)
             }
             
             HStack {
-                TabButton(title: .CHARACTER_LIST, image: "circle.grid.cross.fill", selected: $current)
                 Spacer()
-                TabButton(title: .FAVORITES, image: "circle.square", selected: $current)
+                TabButton(title: .CHARACTER_LIST, image: Image("rick-icon"), selected: $current)
+                Spacer()
+                TabButton(title: .FAVORITES, image: Image(systemName:"star"), selected: $current)
+                Spacer()
             }
             .padding(.vertical, 12)
             .padding(.horizontal)
-            .background(.green)
+            .background(Color("backgroundsTertiary"))
             .clipShape(Capsule())
             .padding(.horizontal, 25)
-            .frame(width: 130)
+            .frame(width: 240)
+            .shadow(color: Color("foregroundsTertiary").opacity(0.6), radius: 10)
         }
     }
 }
@@ -57,4 +61,14 @@ fileprivate var uiTabBarAppearance: UITabBarAppearance {
     
             
     return appearance
+}
+
+
+
+struct TabButton_Previews: PreviewProvider {
+    
+    
+    static var previews: some View {
+        TabBar(current: .constant(ETabBarItems.CHARACTER_LIST), coordinator: HomeCoordinator())
+    }
 }

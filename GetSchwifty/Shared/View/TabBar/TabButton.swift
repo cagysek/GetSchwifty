@@ -10,7 +10,8 @@ import SwiftUI
 struct TabButton: View {
 
     var title: ETabBarItems
-    var image: String
+    
+    var image: Image
 
     @Binding var selected: ETabBarItems
     
@@ -19,15 +20,14 @@ struct TabButton: View {
             withAnimation(.spring()) { selected = title }
         }, label: {
             HStack(spacing: 10) {
-                Image(systemName: image)
+                image
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(.white)
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(selected == title ?  Color("iconsTertiary") : Color("iconsSecondary"))
             }
             .padding(.vertical, 10)
             .padding(.horizontal)
-            .background(Color.white.opacity(selected == title ? 0.08 : 0))
             .clipShape(Capsule())
         })
     }

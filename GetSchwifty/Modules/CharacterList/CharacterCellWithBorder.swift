@@ -14,7 +14,7 @@ struct CharacterCellWithBorder: View {
     
     var body: some View {
         ZStack {
-            Color.white
+            Color("backgroundsTertiary")
             
             HStack {
                 AsyncImage(url: URL(string: character.image) ?? nil)
@@ -27,7 +27,7 @@ struct CharacterCellWithBorder: View {
                     HStack(alignment: .top) {
                         Text(character.name)
                             .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("foregroundsPrimary"))
                         
                         Image(systemName: "star.fill")
                             .foregroundColor(Color("iconsTertiary"))
@@ -43,8 +43,8 @@ struct CharacterCellWithBorder: View {
                 Spacer()
                 
                 Image(systemName: "chevron.forward")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Color("foregroundsSecondary"))
+                    .font(.system(size: 16, weight: .bold))
                     .padding(.trailing)
                 
             }
@@ -54,7 +54,7 @@ struct CharacterCellWithBorder: View {
         .padding(.trailing)
         .padding(.leading)
         .padding(.top, 7)
-        .shadow(color: .gray.opacity(0.3), radius: 15)
+        .shadow(color: Color("foregroundsTertiary").opacity(0.3), radius: 8)
         .fixedSize(horizontal: false, vertical: true)
         
     }
@@ -62,17 +62,31 @@ struct CharacterCellWithBorder: View {
 
 struct CharacterCellWithBorder_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
-            
-            CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
-            
-            CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
-            
-            CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+        Group {
+            VStack {
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+            }
+            VStack {
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                
+                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+            }
+            .preferredColorScheme(.dark)
         }
         
 
             
     }
+    
 }
+

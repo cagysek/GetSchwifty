@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct FavoriteListCoordinatorView: View {
+    
+    @ObservedObject var coordinator: FavoriteListCoordinator
+    
     var body: some View {
-        Text("FAV list")
+        NavigationView {
+            FavoriteListView(viewModel: coordinator.viewModel)
+                .navigation(item: $coordinator.characterDetailViewModel) { viewModel in
+                    CharacterDetailView(viewModel: viewModel)
+                }
+                .background(Color("backgroundsPrimary"))
+        }
     }
 }
 
 struct FavoriteListCoordinatorView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteListCoordinatorView()
+        FavoriteListCoordinatorView(coordinator: FavoriteListCoordinator(parent: HomeCoordinator()))
     }
 }
