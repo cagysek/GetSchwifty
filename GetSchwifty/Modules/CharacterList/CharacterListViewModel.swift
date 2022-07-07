@@ -32,6 +32,8 @@ class CharacterListViewModel: ObservableObject {
     }
     
     
+    /// Loads characters data to published property
+    /// Triggered when view appears
     public func loadData() -> Void {
         
         // if is something in searchbar
@@ -47,13 +49,15 @@ class CharacterListViewModel: ObservableObject {
             return
         }
         
+        // reset pagging
         self.fetchCharacters(page: 1) { data in
             self.characters = data
             self.currentPage = 2
         }
-        
     }
     
+    
+    /// Loads more data to data ot the characters
     public func loadMore() -> Void {
         
         if (self.isLoading) {
@@ -69,10 +73,17 @@ class CharacterListViewModel: ObservableObject {
         }
     }
     
-    public func startSearching() -> Void {
+    /// Resets characters data
+    public func resetData() -> Void {
         self.characters = []
     }
     
+    
+    /// Fetchs data from api
+    /// - Parameters:
+    ///   - page: number of page
+    ///   - name: name for filter
+    ///   - completion: completion handler
     private func fetchCharacters(page: Int?, name: String? = nil, completion: @escaping ([Character]) -> Void) -> Void {
         
         CharacterService.shared.apollo.fetch(query: CharacterListQuery(page: page, name: name)) { result in
@@ -91,6 +102,8 @@ class CharacterListViewModel: ObservableObject {
         }
     }
     
+    
+    /// Bind combine on search bar for  data manipulation
     private func initSearchBar() -> Void {
         $searchText
             .debounce(for: .milliseconds(800), scheduler: RunLoop.main)
@@ -105,6 +118,8 @@ class CharacterListViewModel: ObservableObject {
     }
     
     
+    /// Searchbar action for loading data by search query
+    /// - Parameter searchText: search query
     private func searchItems(searchText: String) {
             
         self.fetchCharacters(page: nil, name: searchText) { data in

@@ -19,12 +19,12 @@ class CharacterDetailViewModel: ObservableObject {
     }
     
     
+    /// Loads data for character
     public func loadData() -> Void {
         CharacterService.shared.apollo.fetch(query: CharacterQuery(id: self.characterId)) { result in
             switch result {
                 case .success(let graphQLResult):
                     
-                
                 guard let characterData = graphQLResult.data?.character else {
                     return
                 }
@@ -41,6 +41,10 @@ class CharacterDetailViewModel: ObservableObject {
         }
     }
     
+    
+    /// Fancy mapper for character info...
+    /// - Parameter characterDetail: Detail information avout character
+    /// - Returns: datasource for print statistics
     public func getCharacterStats(_ characterDetail: CharacterDetail) -> [String] {
         return [
             "Status", characterDetail.status,

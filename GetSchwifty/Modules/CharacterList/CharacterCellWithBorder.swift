@@ -83,10 +83,6 @@ struct CharacterCellWithBorder_Previews: PreviewProvider {
             }
             .preferredColorScheme(.dark)
         }
-        
-
-            
     }
-    
 }
 

@@ -13,8 +13,6 @@ struct CharacterListView: View {
     
     @ObservedObject var viewModel: CharacterListViewModel
     
-    @State private var searchText = ""
-    
     var body: some View {
         
         Group {
@@ -59,7 +57,7 @@ struct CharacterListView: View {
         })
         .onChange(of: isSearching, perform: { isSearching in
             if (isSearching) {
-                self.viewModel.startSearching()
+                self.viewModel.resetData()
             }
             else {
                 self.viewModel.loadData()
