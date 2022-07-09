@@ -15,15 +15,17 @@ class CharacterListCoordinator: ObservableObject {
     
     
     private unowned let parent: HomeCoordinator
+    let databaseService: DatabaseService
     
     
-    init(parent: HomeCoordinator) {
+    init(parent: HomeCoordinator, databaseService: DatabaseService) {
         self.parent = parent
+        self.databaseService = databaseService
         
-        self.viewModel = .init(coordinator: self)
+        self.viewModel = .init(coordinator: self, databaseService: databaseService)
     }
     
-    func open(_ characterId: String) {
+    func open(_ characterId: Int) {
         self.characterDetailViewModel = .init(characterId: characterId, coordinator: self)
     }
 }

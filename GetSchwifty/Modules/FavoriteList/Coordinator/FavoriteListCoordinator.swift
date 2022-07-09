@@ -22,7 +22,7 @@ class FavoriteListCoordinator: ObservableObject {
         self.viewModel = .init(coordinator: self)
     }
     
-    func open(_ characterId: String) {
+    func open(_ characterId: Int) {
 //        self.characterDetailViewModel = .init(characterId: characterId, coordinator: self)
     }
     

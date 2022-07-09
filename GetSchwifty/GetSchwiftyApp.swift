@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct GetSchwiftyApp: App {
     
-    @StateObject var coordinator = HomeCoordinator()
+    @StateObject var coordinator = HomeCoordinator(dababaseService: DatabaseService())
     
     var body: some Scene {
         WindowGroup {

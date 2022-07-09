@@ -9,19 +9,22 @@ import Foundation
 
 class CharacterDetailViewModel: ObservableObject {
     @Published var characterDetail: CharacterDetail? = nil
+    @Published var isFavorite: Bool = false
     
-    private let characterId: String
+    private let characterId: Int
     private unowned let coordinator: CharacterListCoordinator
     
-    init(characterId: String, coordinator: CharacterListCoordinator) {
+    init(characterId: Int, coordinator: CharacterListCoordinator) {
         self.characterId = characterId
         self.coordinator = coordinator
+        
+        isFavoriteCharacter()
     }
     
     
     /// Loads data for character
     public func loadData() -> Void {
-        CharacterService.shared.apollo.fetch(query: CharacterQuery(id: self.characterId)) { result in
+        CharacterService.shared.apollo.fetch(query: CharacterQuery(id: String(self.characterId))) { result in
             switch result {
                 case .success(let graphQLResult):
                     
@@ -54,5 +57,24 @@ class CharacterDetailViewModel: ObservableObject {
             "Origin", characterDetail.origin,
             "Location", characterDetail.location,
         ]
+    }
+    
+    public func isFavoriteCharacter() -> Void {
+        let result = try? self.coordinator.databaseService.read(characterIds: [characterId])
+        
+        
+        self.isFavorite = !(result?.isEmpty ?? true)
+    }
+    
+    public func markFavorite() -> Void {
+        self.coordinator.databaseService.create(characterId: characterId)
+        
+        self.isFavorite = true
+    }
+    
+    public func unmarkFavorite() -> Void {
+        self.coordinator.databaseService.delete(characterId: characterId)
+        
+        self.isFavorite = false
     }
 }

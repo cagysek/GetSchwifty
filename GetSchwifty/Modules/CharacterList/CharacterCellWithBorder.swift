@@ -29,9 +29,12 @@ struct CharacterCellWithBorder: View {
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(Color("foregroundsPrimary"))
                         
-                        Image(systemName: "star.fill")
-                            .foregroundColor(Color("iconsTertiary"))
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                        if (character.isFavorite) {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(Color("iconsTertiary"))
+                                .font(.system(size: 15, weight: .bold, design: .rounded))
+                        }
+                        
                     }
                     
                     
@@ -64,22 +67,22 @@ struct CharacterCellWithBorder_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VStack {
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
             }
             VStack {
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: "1", name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
             }
             .preferredColorScheme(.dark)
         }

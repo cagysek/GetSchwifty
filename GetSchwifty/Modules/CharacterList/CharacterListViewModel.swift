@@ -18,11 +18,14 @@ class CharacterListViewModel: ObservableObject {
     @Published var navigationText = "Characters"
     
     private unowned let coordinator: CharacterListCoordinator
+    private let databaseService: DatabaseService
+    
     private var currentPage: Int = 1
     private var subscription: Set<AnyCancellable> = []
     
-    init(coordinator: CharacterListCoordinator) {
+    init(coordinator: CharacterListCoordinator, databaseService: DatabaseService) {
         self.coordinator = coordinator
+        self.databaseService = databaseService
         
         self.initSearchBar()
     }
@@ -90,14 +93,35 @@ class CharacterListViewModel: ObservableObject {
             switch result {
                 case .success(let graphQLResult):
                     
-                let data = graphQLResult.data?.characters?.results?.compactMap({ character in
+                let characters = graphQLResult.data?.characters?.results?.compactMap({ character in
                         Character(character)
                     }) ?? []
                 
-                completion(data)
+                self.markFavorites(characters: characters)
+                
+                completion(characters)
                     
                 case .failure(let error):
                     print(error)
+            }
+        }
+    }
+    
+    
+    /// Marks favorite characters
+    /// - Parameter characters: array of fetched characters
+    private func markFavorites(characters: [Character]) -> Void
+    {
+        // get fetched character ids
+        let characterIds = characters.map({ return $0.id })
+        
+        // according to ids fetch database data
+        let favoriteIds = try? self.databaseService.read(characterIds: characterIds)
+        
+        // marks favorite characters
+        for character in characters {
+            if let _ = favoriteIds?[character.id] {
+                character.isFavorite = true
             }
         }
     }

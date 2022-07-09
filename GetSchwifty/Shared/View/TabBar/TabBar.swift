@@ -69,6 +69,6 @@ struct TabButton_Previews: PreviewProvider {
     
     
     static var previews: some View {
-        TabBar(current: .constant(ETabBarItems.CHARACTER_LIST), coordinator: HomeCoordinator())
+        TabBar(current: .constant(ETabBarItems.CHARACTER_LIST), coordinator: HomeCoordinator(dababaseService: DatabaseService()))
     }
 }

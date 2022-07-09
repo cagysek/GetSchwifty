@@ -45,11 +45,26 @@ struct CharacterDetailView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: "star")
-                                    .font(.system(size: 25, weight: .regular, design: .rounded))
-                                    .foregroundColor(.gray)
-                                    .padding(.top, 15)
-                                    .padding(.trailing, 15)
+                                if (self.viewModel.isFavorite) {
+                                    Image(systemName: "star.fill")
+                                        .font(.system(size: 25, weight: .regular, design: .rounded))
+                                        .foregroundColor(Color("iconsTertiary"))
+                                        .padding(.top, 15)
+                                        .padding(.trailing, 15)
+                                        .onTapGesture {
+                                            self.viewModel.unmarkFavorite()
+                                        }
+                                } else {
+                                    Image(systemName: "star")
+                                        .font(.system(size: 25, weight: .regular, design: .rounded))
+                                        .foregroundColor(.gray)
+                                        .padding(.top, 15)
+                                        .padding(.trailing, 15)
+                                        .onTapGesture {
+                                            self.viewModel.markFavorite()
+                                        }
+                                }
+                                
                                 
                                 
                             }
@@ -115,6 +130,6 @@ struct Stats: View {
 
 struct CharacterDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CharacterDetailView(viewModel: CharacterDetailViewModel(characterId: "1", coordinator: CharacterListCoordinator(parent: HomeCoordinator())))
+        CharacterDetailView(viewModel: CharacterDetailViewModel(characterId: 1, coordinator: CharacterListCoordinator(parent: HomeCoordinator(dababaseService: DatabaseService()), databaseService: DatabaseService())))
     }
 }

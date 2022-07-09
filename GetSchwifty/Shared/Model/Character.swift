@@ -9,21 +9,22 @@ import Foundation
 
 typealias CharacterData = CharacterListQuery.Data.Character
 
-struct Character: Identifiable, Decodable {
+class Character: Identifiable, Decodable {
     
-    var id: String
+    var id: Int
     var name: String
     var status: String
     var image: String
+    public var isFavorite: Bool = false
     
     init(_ character: CharacterData.Result?) {
-        self.id = character?.id ?? ""
+        self.id = Int(character?.id ?? "0") ?? 0
         self.name = character?.name ?? ""
         self.status = character?.status ?? ""
         self.image = character?.image ?? ""
     }
     
-    init(id: String, name: String, status: String, image: String) {
+    init(id: Int, name: String, status: String, image: String) {
         self.id = id
         self.name = name
         self.status = status

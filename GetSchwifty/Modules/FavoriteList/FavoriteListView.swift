@@ -21,6 +21,6 @@ struct FavoriteListView: View {
 
 struct FavoriteListView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteListView(viewModel: FavoriteListViewModel(coordinator: FavoriteListCoordinator(parent: HomeCoordinator())))
+        FavoriteListView(viewModel: FavoriteListViewModel(coordinator: FavoriteListCoordinator(parent: HomeCoordinator(dababaseService: DatabaseService()))))
     }
 }

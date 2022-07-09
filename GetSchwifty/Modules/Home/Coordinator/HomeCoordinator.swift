@@ -15,8 +15,8 @@ class HomeCoordinator: ObservableObject {
     @Published var characterListCoordinator: CharacterListCoordinator!
     @Published var favoritesCoordinator: FavoriteListCoordinator!
     
-    init() {
-        self.characterListCoordinator = .init(parent: self)
+    init(dababaseService: DatabaseService) {
+        self.characterListCoordinator = .init(parent: self, databaseService: dababaseService)
         self.favoritesCoordinator = .init(parent: self)
     }
     

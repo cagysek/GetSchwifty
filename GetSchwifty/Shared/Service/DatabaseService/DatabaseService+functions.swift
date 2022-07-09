@@ -116,7 +116,7 @@ extension DatabaseService {
         
         // READ operation prepared statement
         func prepareReadEntryStmt(parametersCount: Int) -> Int32 {
-            guard readEntryStmt == nil else { return SQLITE_OK }
+//            guard readEntryStmt == nil else { return SQLITE_OK }
             
             var sql = "SELECT * FROM Favorites WHERE character_id IN ("
             
