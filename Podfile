@@ -7,6 +7,7 @@ target 'GetSchwifty' do
 
   # Pods for GetSchwifty
   pod "Apollo"
+  pod 'SQLite.swift', '~> 0.13.3'
 
   target 'GetSchwiftyTests' do
     inherit! :search_paths
