@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-struct CharacterCellWithBorder: View {
+struct CharacterCell: View {
     
     var character: Character
-    
     
     var body: some View {
         ZStack {
@@ -67,22 +66,22 @@ struct CharacterCellWithBorder_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VStack {
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
             }
             VStack {
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
                 
-                CharacterCellWithBorder(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
             }
             .preferredColorScheme(.dark)
         }

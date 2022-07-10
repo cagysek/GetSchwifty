@@ -23,10 +23,10 @@ struct TabButton: View {
                 image
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 30, height: 30)
+                    .frame(width: 35, height: 35)
                     .foregroundColor(selected == title ?  Color("iconsTertiary") : Color("iconsSecondary"))
             }
-            .padding(.vertical, 10)
+            .padding(.vertical, 15)
             .padding(.horizontal)
             .clipShape(Capsule())
         })

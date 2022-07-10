@@ -13,11 +13,11 @@ class HomeCoordinator: ObservableObject {
     @Published var currentTab = ETabBarItems.CHARACTER_LIST
     
     @Published var characterListCoordinator: CharacterListCoordinator!
-    @Published var favoritesCoordinator: FavoriteListCoordinator!
+    @Published var favoritesCoordinator: CharacterListCoordinator!
     
     init(dababaseService: DatabaseService) {
-        self.characterListCoordinator = .init(parent: self, databaseService: dababaseService)
-        self.favoritesCoordinator = .init(parent: self)
+        self.characterListCoordinator = .init(listType: EListType.ALL, parent: self, databaseService: dababaseService)
+        self.favoritesCoordinator = .init(listType: EListType.FAVOURITE,parent: self, databaseService: dababaseService)
     }
     
     

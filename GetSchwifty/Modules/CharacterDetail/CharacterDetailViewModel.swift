@@ -60,20 +60,20 @@ class CharacterDetailViewModel: ObservableObject {
     }
     
     public func isFavoriteCharacter() -> Void {
-        let result = try? self.coordinator.databaseService.read(characterIds: [characterId])
+        let result = try? self.coordinator.getDatabaseService().get(characterIds: [characterId])
         
         
         self.isFavorite = !(result?.isEmpty ?? true)
     }
     
     public func markFavorite() -> Void {
-        self.coordinator.databaseService.create(characterId: characterId)
+        self.coordinator.getDatabaseService().create(characterId: characterId)
         
         self.isFavorite = true
     }
     
     public func unmarkFavorite() -> Void {
-        self.coordinator.databaseService.delete(characterId: characterId)
+        self.coordinator.getDatabaseService().delete(characterId: characterId)
         
         self.isFavorite = false
     }

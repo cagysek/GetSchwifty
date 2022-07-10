@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import UIKit
+import Apollo
 
 
 class CharacterListViewModel: ObservableObject {
@@ -15,18 +16,21 @@ class CharacterListViewModel: ObservableObject {
     @Published var characters = [Character]()
     @Published var isLoading: Bool = false
     @Published var searchText: String = String()
-    @Published var navigationText = "Characters"
+    @Published var navigationText = ""
     
     private unowned let coordinator: CharacterListCoordinator
     private let databaseService: DatabaseService
+    private let listType: EListType
     
     private var currentPage: Int = 1
     private var subscription: Set<AnyCancellable> = []
     
-    init(coordinator: CharacterListCoordinator, databaseService: DatabaseService) {
+    init(listType: EListType, coordinator: CharacterListCoordinator, databaseService: DatabaseService) {
         self.coordinator = coordinator
         self.databaseService = databaseService
+        self.listType = listType
         
+        self.navigationText = self.getNavigationTitle()
         self.initSearchBar()
     }
     
@@ -38,7 +42,11 @@ class CharacterListViewModel: ObservableObject {
     /// Loads characters data to published property
     /// Triggered when view appears
     public func loadData() -> Void {
-        
+        listType == EListType.ALL ? loadAll() : loadFavourite()
+    }
+    
+    
+    private func loadAll() -> Void {
         // if is something in searchbar
         // after move back from detail
         if (!self.searchText.isEmpty) {
@@ -57,6 +65,31 @@ class CharacterListViewModel: ObservableObject {
             self.characters = data
             self.currentPage = 2
         }
+    }
+    
+    private func loadFavourite() -> Void {
+        guard let favourites = try? self.databaseService.getAll() else {
+            return
+        }
+        
+        CharacterService.shared.apollo.fetch(query: CharacterListByIdsQuery(ids: favourites.map({ GraphQLID($0.key) }))) { result in
+            switch result {
+                case .success(let graphQLResult):
+                    
+                let characters = graphQLResult.data?.charactersByIds?.compactMap({ character in
+                    Character(character, isFavourite: true)
+                }) ?? []
+                
+                
+                self.characters = characters
+                    
+                case .failure(let error):
+                    print(error)
+            }
+            
+        }
+        
+        
     }
     
     
@@ -116,7 +149,7 @@ class CharacterListViewModel: ObservableObject {
         let characterIds = characters.map({ return $0.id })
         
         // according to ids fetch database data
-        let favoriteIds = try? self.databaseService.read(characterIds: characterIds)
+        let favoriteIds = try? self.databaseService.get(characterIds: characterIds)
         
         // marks favorite characters
         for character in characters {
@@ -129,6 +162,11 @@ class CharacterListViewModel: ObservableObject {
     
     /// Bind combine on search bar for  data manipulation
     private func initSearchBar() -> Void {
+        // init only on all list
+        if (self.listType != EListType.ALL) {
+            return
+        }
+        
         $searchText
             .debounce(for: .milliseconds(800), scheduler: RunLoop.main)
             .removeDuplicates()
@@ -166,5 +204,13 @@ class CharacterListViewModel: ObservableObject {
         }
         
         return "Nothing found"
+    }
+    
+    public func getNavigationTitle() -> String {
+        return self.listType == EListType.ALL ? "Characters" : "Favorites"
+    }
+    
+    public func isEnabledLoadMore() -> Bool {
+        return self.listType == EListType.ALL
     }
 }

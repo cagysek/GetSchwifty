@@ -32,8 +32,7 @@ struct TabBar: View {
                 CharacterListCoordinatorView(coordinator: self.coordinator.characterListCoordinator)
                     .tag(ETabBarItems.CHARACTER_LIST)
                     
-                    
-                FavoriteListCoordinatorView(coordinator: self.coordinator.favoritesCoordinator)
+                CharacterListCoordinatorView(coordinator: self.coordinator.favoritesCoordinator)
                     .tag(ETabBarItems.FAVORITES)
             }
             
@@ -44,12 +43,11 @@ struct TabBar: View {
                 TabButton(title: .FAVORITES, image: Image(systemName:"star"), selected: $current)
                 Spacer()
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal)
+            
             .background(Color("backgroundsTertiary"))
             .clipShape(Capsule())
             .padding(.horizontal, 25)
-            .frame(width: 240)
+            .frame(width: 220)
             .shadow(color: Color("foregroundsTertiary").opacity(0.6), radius: 10)
         }
     }

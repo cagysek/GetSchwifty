@@ -28,7 +28,7 @@ struct CharacterListView: View {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
                         ForEach(viewModel.characters) { character in
-                            CharacterCellWithBorder(character: character)
+                            CharacterCell(character: character)
                             .onNavigation {
                                 self.viewModel.open(character)
                             }
@@ -38,22 +38,24 @@ struct CharacterListView: View {
                             ProgressView()
                         }
                     
-                        
-                        Color.clear
-                            .frame(width: 0, height: 0, alignment: .bottom)
-                            .onAppear() {
-                                // disable loadMore in search
-                                if (self.viewModel.searchText.isEmpty) {
-                                    self.viewModel.loadMore()
+                        if (self.viewModel.isEnabledLoadMore()) {
+                            Color.clear
+                                .frame(width: 0, height: 0, alignment: .bottom)
+                                .onAppear() {
+                                    // disable loadMore in search
+                                    if (self.viewModel.searchText.isEmpty) {
+                                        self.viewModel.loadMore()
+                                    }
                                 }
-                            }
+                        }
+                        
                     }
                 }
             }
         }
         .onAppear(perform: {
             self.viewModel.loadData()
-            self.viewModel.navigationText = "Characters"
+            self.viewModel.navigationText = self.viewModel.getNavigationTitle()
         })
         .onChange(of: isSearching, perform: { isSearching in
             if (isSearching) {

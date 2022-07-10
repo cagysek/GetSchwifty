@@ -38,7 +38,7 @@ extension DatabaseService {
         }
         
         //"SELECT * FROM Records WHERE EmployeeID = ? LIMIT 1"
-    func read(characterIds: [Int]) throws -> [Int: Int] {
+        func get(characterIds: [Int]) throws -> [Int: Int] {
             // ensure statements are created on first usage if nil
             guard self.prepareReadEntryStmt(parametersCount: characterIds.count) == SQLITE_OK else { throw SqliteError(message: "Error in prepareReadEntryStmt") }
 
@@ -46,11 +46,6 @@ extension DatabaseService {
                 // reset the prepared statement on exit.
                 sqlite3_reset(self.readEntryStmt)
             }
-
-            //  At some places (esp sqlite3_bind_xxx functions), we typecast String to NSString and then convert to char*,
-            // ex: (eventLog as NSString).utf8String. This is a weird bug in swift's sqlite3 bridging. this conversion resolves it.
-
-            //Inserting employeeID in readEntryStmt prepared statement
             
             var parameterIndex = 1
             for characterId in characterIds {
@@ -60,6 +55,28 @@ extension DatabaseService {
                 }
                 
                 parameterIndex += 1
+            }
+            
+            
+            var result = [Int: Int]()
+            
+            while (sqlite3_step(readEntryStmt) == SQLITE_ROW) {
+                let characterId = sqlite3_column_int(readEntryStmt, 1)
+                
+                result[Int(characterId)] = 1
+
+            }
+
+            return result
+        }
+    
+        func getAll() throws -> [Int: Int] {
+            // ensure statements are created on first usage if nil
+            guard self.prepareReadEntryStmt(parametersCount: nil) == SQLITE_OK else { throw SqliteError(message: "Error in prepareReadEntryStmt") }
+
+            defer {
+                // reset the prepared statement on exit.
+                sqlite3_reset(self.readEntryStmt)
             }
             
             var result = [Int: Int]()
@@ -115,21 +132,28 @@ extension DatabaseService {
         }
         
         // READ operation prepared statement
-        func prepareReadEntryStmt(parametersCount: Int) -> Int32 {
+        func prepareReadEntryStmt(parametersCount: Int?) -> Int32 {
 //            guard readEntryStmt == nil else { return SQLITE_OK }
             
-            var sql = "SELECT * FROM Favorites WHERE character_id IN ("
+            var sql = "SELECT * FROM Favorites "
             
-            for i in 0 ..< parametersCount {
-                if (i == 0) {
-                    sql.append(contentsOf: "?")
-                    continue
+            if (parametersCount != nil) {
+                
+                sql.append(contentsOf: "WHERE character_id IN (")
+                
+                for i in 0 ..< parametersCount! {
+                    if (i == 0) {
+                        sql.append(contentsOf: "?")
+                        continue
+                    }
+                    
+                    sql.append(contentsOf: ",?")
                 }
                 
-                sql.append(contentsOf: ",?")
+                sql.append(contentsOf: ")")
             }
             
-            sql.append(contentsOf: ")")
+            
             
             
             //preparing the query

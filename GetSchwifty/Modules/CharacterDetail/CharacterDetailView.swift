@@ -130,6 +130,6 @@ struct Stats: View {
 
 struct CharacterDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CharacterDetailView(viewModel: CharacterDetailViewModel(characterId: 1, coordinator: CharacterListCoordinator(parent: HomeCoordinator(dababaseService: DatabaseService()), databaseService: DatabaseService())))
+        CharacterDetailView(viewModel: CharacterDetailViewModel(characterId: 1, coordinator: CharacterListCoordinator(listType: EListType.ALL, parent: HomeCoordinator(dababaseService: DatabaseService()), databaseService: DatabaseService())))
     }
 }

@@ -46,8 +46,8 @@
             filePath = "GetSchwifty/Shared/Service/DatabaseService/DatabaseService+functions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "prepareReadEntryStmt(parametersCount:)"
             landmarkType = "7">
          </BreakpointContent>

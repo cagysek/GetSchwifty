@@ -15,17 +15,25 @@ class CharacterListCoordinator: ObservableObject {
     
     
     private unowned let parent: HomeCoordinator
-    let databaseService: DatabaseService
+    
+    private let databaseService: DatabaseService
+    
+    let listType: EListType
     
     
-    init(parent: HomeCoordinator, databaseService: DatabaseService) {
+    init(listType: EListType, parent: HomeCoordinator, databaseService: DatabaseService) {
         self.parent = parent
         self.databaseService = databaseService
+        self.listType = listType
         
-        self.viewModel = .init(coordinator: self, databaseService: databaseService)
+        self.viewModel = .init(listType: listType, coordinator: self, databaseService: databaseService)
     }
     
     func open(_ characterId: Int) {
         self.characterDetailViewModel = .init(characterId: characterId, coordinator: self)
+    }
+    
+    func getDatabaseService() -> DatabaseService {
+        return self.databaseService
     }
 }
