@@ -12,16 +12,9 @@ iOS application that communicates with the [Rick And Morty](https://rickandmorty
 - Apollo (used GraphQL for data retrieval)
 
 
-## Done
-- Most of the layout
-- App navigation
+## Features
 - Dark/light mode
-- Character list
-- Searching
-- Character detail
-
-## Missing
-- Favorite list
-- Data layer for storing favourite characters (I would like to use sqlite)
-- Marking favourites
-- Some UX improvements 
+- List of characters
+- Searching by name
+- Detail of character
+- Favorite list 
