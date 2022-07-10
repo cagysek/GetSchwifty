@@ -10,10 +10,14 @@ import SwiftUI
 struct CharacterCell: View {
     
     var character: Character
+    var hasWhiteBackground: Bool
     
     var body: some View {
         ZStack {
-            Color("backgroundsTertiary")
+            if (hasWhiteBackground) {
+                Color("backgroundsTertiary")
+            }
+            
             
             HStack {
                 AsyncImage(url: URL(string: character.image) ?? nil)
@@ -66,22 +70,22 @@ struct CharacterCellWithBorder_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VStack {
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: false)
                 
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: true)
                 
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: true)
                 
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: true)
             }
             VStack {
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: true)
                 
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez Rick Sanchez Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: true)
                 
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: false)
                 
-                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
+                CharacterCell(character: Character(id: 1, name: "Rick Sanchez", status: "Alive", image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"), hasWhiteBackground: false)
             }
             .preferredColorScheme(.dark)
         }

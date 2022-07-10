@@ -17,6 +17,7 @@ class CharacterListViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var searchText: String = String()
     @Published var navigationText = ""
+    var isSearching: Bool = false
     
     private unowned let coordinator: CharacterListCoordinator
     private let databaseService: DatabaseService
@@ -42,6 +43,9 @@ class CharacterListViewModel: ObservableObject {
     /// Loads characters data to published property
     /// Triggered when view appears
     public func loadData() -> Void {
+        
+        self.isSearching = false
+        
         listType == EListType.ALL ? loadAll() : loadFavourite()
     }
     
@@ -102,7 +106,7 @@ class CharacterListViewModel: ObservableObject {
         
         self.isLoading = true
         
-        self.fetchCharacters(page: currentPage) { data in
+        self.fetchCharacters(page: currentPage, name: self.searchText) { data in
             self.characters.append(contentsOf: data)
             self.currentPage += 1
             self.isLoading = false
@@ -171,6 +175,7 @@ class CharacterListViewModel: ObservableObject {
             .debounce(for: .milliseconds(800), scheduler: RunLoop.main)
             .removeDuplicates()
             .compactMap{ $0 }
+            .dropFirst()
             .sink { (_) in
                 //
             } receiveValue: { [self] (searchField) in
@@ -183,11 +188,25 @@ class CharacterListViewModel: ObservableObject {
     /// Searchbar action for loading data by search query
     /// - Parameter searchText: search query
     private func searchItems(searchText: String) {
+        
+        if (searchText.isEmpty) {
+            DispatchQueue.main.async {
+                self.isSearching = true
+                
+                self.characters = []
+                self.isLoading = false
+            }
             
+            return
+        }
+        
         self.fetchCharacters(page: nil, name: searchText) { data in
             DispatchQueue.main.async {
+                self.isSearching = true
+                
                 self.characters = data
                 self.isLoading = false
+                self.currentPage = 2
             }
         }
     }

@@ -28,7 +28,7 @@ struct CharacterListView: View {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
                         ForEach(viewModel.characters) { character in
-                            CharacterCell(character: character)
+                            CharacterCell(character: character, hasWhiteBackground: !viewModel.isSearching)
                             .onNavigation {
                                 self.viewModel.open(character)
                             }
@@ -42,10 +42,7 @@ struct CharacterListView: View {
                             Color.clear
                                 .frame(width: 0, height: 0, alignment: .bottom)
                                 .onAppear() {
-                                    // disable loadMore in search
-                                    if (self.viewModel.searchText.isEmpty) {
-                                        self.viewModel.loadMore()
-                                    }
+                                    self.viewModel.loadMore()
                                 }
                         }
                         
